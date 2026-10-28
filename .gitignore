@@ -14,3 +14,6 @@ __pycache__/
 
 # 本地误建的空仓库（无内容），避免被当作 submodule
 Xixi/
+
+# 本地推送辅助脚本
+push-to-github.bat
