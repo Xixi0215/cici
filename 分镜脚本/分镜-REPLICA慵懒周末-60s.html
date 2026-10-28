@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>分镜脚本 · REPLICA 慵懒周末 60″</title>
+<style>
+  :root{
+    --paper:#f7f5f1; --card:#fffdf9; --ink:#1d1b19; --ink2:#4a4642; --ink3:#8a847c;
+    --line:#e2ddd3; --green:#2d5b4d; --green-l:#e7ede7; --clay:#a9622f; --clay-l:#f5e9dd;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+    font-size:15px;line-height:1.85;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:56px 26px 90px}
+  .eyebrow{font-size:11px;letter-spacing:.34em;color:var(--green);font-weight:600;margin-bottom:14px}
+  h1{font-family:"Songti SC","Noto Serif SC",serif;font-size:36px;line-height:1.3;margin:0 0 6px;letter-spacing:.01em}
+  h1 small{display:block;font-size:17px;color:var(--ink2);font-weight:400;margin-top:10px;letter-spacing:.04em}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}
+  .chip{font-size:12px;padding:5px 11px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink2)}
+  .chip b{color:var(--ink);font-weight:600}
+  .hero{display:grid;grid-template-columns:1fr 250px;gap:34px;align-items:start;margin-top:34px}
+  .hero .lede{padding:24px 26px;background:var(--green-l);border-left:3px solid var(--green);border-radius:2px}
+  .hero .lede p{margin:0;font-size:16.5px;line-height:1.9}
+  .hero .lede p+p{margin-top:12px;font-size:14px;color:var(--ink2)}
+  .hero .lede b{color:var(--green)}
+  .prod{border:1px solid var(--line);background:#fff;border-radius:2px;padding:10px 10px 6px}
+  .prod img{width:100%;display:block}
+  .prod figcaption{font-size:10.5px;color:var(--ink3);margin-top:6px;line-height:1.5}
+  h2{font-family:"Songti SC","Noto Serif SC",serif;font-size:21px;margin:60px 0 4px;letter-spacing:.02em}
+  h2 .num{font-family:Georgia,serif;color:var(--green);font-size:13px;letter-spacing:.16em;display:block;margin-bottom:8px;font-weight:600}
+  .sub{color:var(--ink3);font-size:13px;margin:0 0 20px}
+  p{margin:0 0 14px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0 8px}
+  th,td{text-align:left;padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:11.5px;letter-spacing:.08em;color:var(--ink3);font-weight:600;border-bottom:1px solid var(--ink3);white-space:nowrap}
+  td.t{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:var(--clay);white-space:nowrap}
+  td.n{font-family:Georgia,serif;color:var(--green);font-weight:600;font-size:13px;width:26px}
+  .shots{table-layout:fixed;font-size:12.8px}
+  .shots th,.shots td{padding:7px}
+  .shots th:nth-child(1),.shots td:nth-child(1){width:26px}
+  .shots th:nth-child(2),.shots td:nth-child(2){width:114px}
+  .shots th:nth-child(3),.shots td:nth-child(3){width:44px}
+  .shots th:nth-child(4),.shots td:nth-child(4){width:96px}
+  .shots th:nth-child(5),.shots td:nth-child(5){width:188px}
+  .shots th:nth-child(6),.shots td:nth-child(6){width:74px}
+  .shots th:nth-child(7),.shots td:nth-child(7){width:172px}
+  .shots b{font-weight:600}
+  .cardline{background:var(--clay-l);color:var(--ink);font-weight:600;padding:2px 6px;border-radius:2px;display:inline-block;font-size:12.5px;line-height:1.5}
+  .strip4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0 0}
+  .blk{border:1px solid var(--line);background:var(--card);border-radius:3px;padding:12px 13px}
+  .blk .k{font-family:Georgia,serif;font-size:11px;letter-spacing:.18em;color:var(--green)}
+  .blk h4{margin:6px 0 4px;font-size:15.5px;font-family:"Songti SC","Noto Serif SC",serif}
+  .blk .tc{font-family:ui-monospace,monospace;font-size:11px;color:var(--clay)}
+  .blk p{margin:8px 0 0;font-size:12.5px;color:var(--ink2);line-height:1.7}
+  .blk .cap{display:block;margin-top:9px;font-size:12px;color:var(--ink);border-top:1px dashed var(--line);padding-top:8px;line-height:1.6}
+  .segbox{margin-top:34px;border-top:2px solid var(--ink);padding-top:14px}
+  .seghead{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;margin-bottom:2px}
+  .seghead .s{font-family:Georgia,serif;font-size:12px;letter-spacing:.18em;color:var(--green)}
+  .seghead h3{margin:0;font-family:"Songti SC","Noto Serif SC",serif;font-size:20px}
+  .seghead .tc{font-family:ui-monospace,monospace;font-size:12px;color:var(--clay)}
+  .segfn{font-size:13px;color:var(--ink2);margin:2px 0 10px}
+  .segfn em{font-style:normal;color:var(--green);font-weight:600}
+  .cop{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}
+  .cop div{border:1px solid var(--line);border-radius:3px;background:var(--card);padding:12px 13px}
+  .cop h5{margin:0 0 8px;font-size:12px;letter-spacing:.1em;color:var(--green);font-weight:600}
+  .cop p{margin:0 0 6px;font-size:12.5px;line-height:1.7;color:var(--ink2)}
+  .cop p:last-child{margin-bottom:0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 34px}
+  .item{padding:13px 0;border-bottom:1px dashed var(--line)}
+  .item h4{margin:0 0 5px;font-size:14.5px;font-weight:600}
+  .item p{margin:0;font-size:13.5px;color:var(--ink2);line-height:1.8}
+  .item .k{color:var(--green);font-weight:600}
+  .prompt{background:#20231f;color:#e8e6e0;border-radius:3px;padding:16px 18px;margin:0 0 12px;font-size:13px;line-height:1.85}
+  .prompt .h{display:block;font-size:11px;letter-spacing:.16em;color:#9ec3a8;margin-bottom:8px;font-family:Georgia,serif}
+  .warn{background:var(--clay-l);border-left:3px solid var(--clay);padding:14px 18px;border-radius:2px;margin:14px 0;font-size:13.5px;color:var(--ink2)}
+  footer{margin-top:64px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--ink3);line-height:1.9}
+  @media(max-width:760px){
+    .wrap{padding:36px 16px 60px} h1{font-size:27px} h1 small{font-size:15px}
+    .hero{grid-template-columns:1fr} .strip4{grid-template-columns:repeat(2,1fr)}
+    .cop{grid-template-columns:repeat(2,1fr)} .grid2{grid-template-columns:1fr}
+    table{font-size:12.5px}
+  }
+  @media print{body{background:#fff}.wrap{max-width:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">分镜脚本 · 60 秒 / 4 段 / 22 镜</div>
+  <h1>LAZY SUNDAY MORNING
+    <small>「慵懒周末」— Maison Margiela REPLICA · 竖屏品牌短片</small>
+  </h1>
+
+  <div class="meta">
+    <span class="chip">总长 <b>60.0 s</b></span>
+    <span class="chip">画幅 <b>9:16 竖屏</b></span>
+    <span class="chip">结构 <b>4 段 × 15 s</b></span>
+    <span class="chip">镜头 <b>22 个</b></span>
+    <span class="chip">平均镜长 <b>2.7 s</b></span>
+    <span class="chip">对白 <b>零对白 · 字幕叙事</b></span>
+    <span class="chip">手写卡 <b>4 张</b></span>
+  </div>
+
+  <div class="hero">
+    <div class="lede">
+      <p><b>把周日早上还给自己。</b></p>
+      <p>一周里她被叫过很多个名字：员工、女儿、谁的朋友。周日早上没有人叫她，于是她先去洗了个澡，喷了一点香，然后什么也没做——这就是整支片子。</p>
+      <p>沿用参考片的语法：竖屏 · 零对白 · 括号内心独白 · 手写卡分章 · 用物质拍气味。但把"逃去雪山"换成"哪儿也不去"——这支香叫 Lazy Sunday Morning，它的远方就是一张床。节奏也随之放慢：平均 2.7 秒一镜，越往后越静。</p>
+    </div>
+    <figure class="prod">
+      <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAcFBQYFBAcGBgYIBwcICxILCwoKCxYPEA0SGhYbGhkWGRgcICgiHB4mHhgZIzAkJiorLS4tGyIyNTEsNSgsLSz/2wBDAQcICAsJCxULCxUsHRkdLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCz/wAARCAHxAXwDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD6RooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiig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D0xT6KAEKg5yM54NJHGkUaxxqERRhVUYAHoBTqKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAM0ZrnPGOgwappcl5JcXcM1lDJJEIZiqk7c/MvQ9O9cloyRy6PZM9lreuXbxLLMLeaOMID0yWaNeecBT2/GnYD1DNFcWxiuZdFW1mvLe2u7l4WiZjvXEMrkHdkhg0YGM+vWuus7dbS0jgV5JAgxukYsx+pPWkBNRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRVDWtVh0TR7nUbhWeO3TcVTG4+wzQAuuY/4R7UCen2aT/0E1xPhNdbs9BthZ2EOoWdykcvNyYHhkCqOTg7lO0e45GCDgVn+Il34m0mWLS9KtvJu4Cm6a4mDruXH3UgcZGfWpPDGta/pljb6dPYacUiUL5glulPHGcNbgfrVWsI1YoL2DVNC/tCSJriTU5ZGWIHZHut7g7QT1xnGeM9cDNdoOlc+bf7bJaXxdPNtJzOsanIYmN48EkDtIT07VZTWZo72CC7t4oknbZGySlju9wVH5gmkwNeiiikMKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigA6V514x8R2niTTtU8N2umXc0rRYW6mgX7NuJwMMSSTwegOPxr0C5x9llydo2Hnjjj3rirUKMYBFNAYvg7wvLpulW0V/ZWN1LHEqyM0rtuYAAnlK6pdN08kM2gWCsvQqrHH/kOlRzgctUqk+p/WqbuIsQqXjMfkJbp22Kx/TaKoXWnSyahYSJsWO3m8yQMG+cY4GNvXODzVyN2DdW/M/41bjk9z+RpAQWutyTXVzE9pcRrbuE8ySMokmRnKk9R2rYicSRhh3qq2JIypJI9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lQlnt2iCAMCSd+D27CuW1J7yBluL2zaBPN2x853dT/IVPeeKbuAn940p9FAjX+p/WsK61e71e533LZIGFA6KKpIR2MZyAcdatJ0qtGPlX6VZWsizatf+PdamqG1/1C1NTJCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACuX8epGdCEknRWxgd8iuoqOeCO5haKZA8bDBUjINNOzA+fra0guLkiN5g2chfLzXd6Mw0u3DzTMVHUbDkfhXTSeE7CGQyW8ZiJ6hOB9cdvwqvP4Yt51ZftFwmf7rD+orRyTFYrL8RfD0DBJrueNh6274/lWtaeMdBvADDqkBz6uB/OuWuPhhHcZK6iRnvJAW/9nFR2nwwNrOGea0uU/utHJH/6C9L3QPQI9SsphmO5hfPo4NS/aYsf6xPzrjm8FtEuLa1sV9jLOP5NSxeE7sZ8y3s/bZeXI/8AZqVkB173MKrlpkUepNU5dT09M7tQthjsZVH9a5eTwnctlfsln9Te3P8AjWfefDyS6Ujy7OMnuLiY/wAwaLIDp7vxFosQ+fVbNfbzl/xrHu/EGkS/LFexyk/3Mt/IVhxfCx4JfMN3bAem13x/KrsXhIWed1+H9lt8fruqvdAq3kUUiGUzoEPTkZP4VFpkCT3G2ESEnuwArTFpbQtt2Syt6bc5/DmtjTrSOJPM+yiFj2JBI/AYApcyQWLaoRxUqjmkHWnDrWRZtW3+oWpaitv9QtS0yQooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKayAjpTqKAMi9t7qPLwTOB6ZzVD+0bxDgyHPuorpiARzVO40+OXJ28+1IZjjVbsdWU/VRUg1a5I6J+VPk0p1Pyciq5tJFPKGgehONUuSP4B+FH9oXDdx/3zUHlMO1OCEdqAJDdSv94/oKjY7uoB/ClxS7aBDAgHQAfhTsYpcUoQk8CgBBUkalpABTo7Z3PStGC2WIAkc0wJ4V2xgU+kFLQIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKaVB6inUUARG3Rv4RTDZxn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" alt="REPLICA Lazy Sunday Morning 产品图">
+      <figcaption>CLEAN &amp; FRESH 干净清新｜略带皂感的干净透明，静谧而柔软</figcaption>
+    </figure>
+  </div>
+
+  <h2><span class="num">01 / STRUCTURE</span>四段结构：醒 · 洗 · 香 · 留</h2>
+  <p class="sub">每段 15 秒、一张手写卡；四段拼起来正好是"一个上午"的完整动作链。</p>
+  <div class="strip4">
+    <div class="blk"><span class="k">S1</span><h4>醒</h4><span class="tc">00:00–00:15</span>
+      <p>手机翻面扣下、床单褶皱、脚尖落地。建立"被叫名字的一周"与"没人叫的今天"。</p>
+      <span class="cap">卡：NOTHING TO RUSH FOR<br>「今天不赶时间」</span></div>
+    <div class="blk"><span class="k">S2</span><h4>洗</h4><span class="tc">00:15–00:30</span>
+      <p>水打在后颈、浴巾吸水、镜上起雾。用物理动作把身份洗掉，皂感在这里建立。</p>
+      <span class="cap">卡：CLEAN IS A FEELING<br>「干净是洗给自己看的」</span></div>
+    <div class="blk"><span class="k">S3</span><h4>香</h4><span class="tc">00:30–00:45</span>
+      <p>香瓶、喷雾、耳后、床单。全片唯一的产品英雄段，香调用四个物件逐一翻译。</p>
+      <span class="cap">卡：SOFT ISN'T WEAK<br>「柔软不是软弱」</span></div>
+    <div class="blk"><span class="k">S4</span><h4>留</h4><span class="tc">00:45–01:00</span>
+      <p>阳台、凉掉的咖啡、风翻书页。什么都不做的偿付，落款收在一个单音上。</p>
+      <span class="cap">卡：STAY A LITTLE LONGER<br>「再赖一会儿」</span></div>
+  </div>
+  <div class="warn"><b>节奏原则：</b>S1 慢（4 秒一镜）→ S2 中（3 秒）→ S3 碎（2.5 秒，全片最快）→ S4 再慢（画面几乎静止）。全片只允许 3 个"硬"声音：两次喷雾、一次泡泡破裂，其余全部做软。</div>
+
+  <h2><span class="num">02 / SHOTS</span>分镜表</h2>
+  <p class="sub">22 个镜头、60.0 秒。字幕列即成片文案，括号为内心独白，色块为手写卡。</p>
+
+  <div class="segbox">
+    <div class="seghead"><span class="s">S1</span><h3>醒</h3><span class="tc">00:00 — 00:15｜15.0 s｜4 镜</span></div>
+    <p class="segfn"><em>功能：</em>立起"角色很多，今天一个都不用当"的前提；用手机、床单、脚三样东西完成，不给人脸。</p>
+    <table class="shots">
+      <tr><th>镜</th><th>时间码</th><th>时长</th><th>景别 · 运动</th><th>画面</th><th>表演</th><th>字幕 / 卡</th><th>声音</th></tr>
+      <tr><td class="n">1</td><td class="t">00:00–00:04</td><td class="t">4.0</td><td>微距 · 固定，浅景深</td><td class="pic">白床单上手机在震，屏幕亮起又暗，通知一条条滑过；一只手从画左伸进来，把手机翻面扣下</td><td>手部：动作慢，不犹豫</td><td>（一周里，你当过很多个角色）</td><td>手机震动闷响、床单摩擦</td></tr>
+      <tr><td class="n">2</td><td class="t">00:04–00:07.5</td><td class="t">3.5</td><td>特写 · 极慢横移</td><td class="pic">床单褶皱与晨光斜切，光柱里有浮尘在动</td><td>—</td><td>（员工、女儿、谁的朋友）</td><td>安静，远处鸟叫</td></tr>
+      <tr><td class="n">3</td><td class="t">00:07.5–00:11</td><td class="t">3.5</td><td>特写 · 低机位固定</td><td class="pic">一只脚从被沿探出，脚尖落地，脚背落一粒光斑；脚趾蜷了一下</td><td>脚趾的小动作＝还没醒透</td><td>（闹钟响过一次，你没有理它）</td><td>脚掌触地轻响</td></tr>
+      <tr><td class="n">4</td><td class="t">00:11–00:13</td><td class="t">2.0</td><td>静物 · 固定（手写卡）</td><td class="pic">床头柜：一杯水、一只旧闹钟，指针停在 9:41 前后；手写英文＋中文压在画面上</td><td>—</td><td><span class="cardline">NOTHING TO RUSH FOR「今天不赶时间」</span></td><td>秒针两下，然后停</td></tr>
+      <tr><td class="n">5</td><td class="t">00:13–00:15</td><td class="t">2.0</td><td>中景 · 手持微晃</td><td class="pic">她坐在床边，背对镜头，乱发垂在肩胛；窗纱逆光，光从发丝边缘漏进来</td><td>肩膀松下来那一下</td><td>（今天没有人叫你）</td><td>床垫轻响、风</td></tr>
+    </table>
+  </div>
+
+  <div class="segbox">
+    <div class="seghead"><span class="s">S2</span><h3>洗</h3><span class="tc">00:15 — 00:30｜15.0 s｜5 镜</span></div>
+    <p class="segfn"><em>功能：</em>把"皂感"拍成动作而不是形容词——水、浴巾、雾、泡沫，四样都得出镜。</p>
+    <table class="shots">
+      <tr><th>镜</th><th>时间码</th><th>时长</th><th>景别 · 运动</th><th>画面</th><th>表演</th><th>字幕 / 卡</th><th>声音</th></tr>
+      <tr><td class="n">6</td><td class="t">00:15–00:18.5</td><td class="t">3.5</td><td>特写 · 固定，60fps 慢放</td><td class="pic">花洒水柱打在后颈与肩胛，水珠在逆光里炸开</td><td>头微微低下去</td><td>（热水冲下来的时候，那些名字才被冲掉）</td><td>水声，先闷后亮</td></tr>
+      <tr><td class="n">7</td><td class="t">00:18.5–00:21.5</td><td class="t">3.0</td><td>特写 · 固定</td><td class="pic">白色浴巾按在手臂上，抬起时留下一道水痕，很快变淡</td><td>按下去、抬起的节奏</td><td>（泡沫是白的，很轻）</td><td>布料吸水声</td></tr>
+      <tr><td class="n">8</td><td class="t">00:21.5–00:24.5</td><td class="t">3.0</td><td>近景 · 固定</td><td class="pic">起雾的镜子，她抬手画一道，露出一只眼睛和半张脸</td><td>眼睛先看自己，再移开</td><td>（镜子上有雾，你没有擦）</td><td>手指划玻璃，声音很近</td></tr>
+      <tr><td class="n">9</td><td class="t">00:24.5–00:28</td><td class="t">3.5</td><td>微距 · 固定（手写卡）</td><td class="pic">水槽里一层白泡沫，最上面一颗正在破；手写卡压上去</td><td>—</td><td><span class="cardline">CLEAN IS A FEELING「干净是洗给自己看的」</span></td><td>泡泡破裂的细响</td></tr>
+      <tr><td class="n">10</td><td class="t">00:28–00:30</td><td class="t">2.0</td><td>中近景 · 横移跟</td><td class="pic">湿发滴水到锁骨，白浴巾裹着，赤脚走过门框的光，背影</td><td>走得很慢</td><td>（干净不是给别人看的）</td><td>赤脚踩地、滴水</td></tr>
+    </table>
+  </div>
+
+  <div class="segbox">
+    <div class="seghead"><span class="s">S3</span><h3>香</h3><span class="tc">00:30 — 00:45｜15.0 s｜6 镜</span></div>
+    <p class="segfn"><em>功能：</em>产品唯一英雄段＋香调可视化。全片最快的一段（2.5 秒一镜），把"闻到"拆成四个可拍的物。</p>
+    <table class="shots">
+      <tr><th>镜</th><th>时间码</th><th>时长</th><th>景别 · 运动</th><th>画面</th><th>表演</th><th>字幕 / 卡</th><th>声音</th></tr>
+      <tr><td class="n">11</td><td class="t">00:30–00:32.5</td><td class="t">2.5</td><td>微距 · 固定</td><td class="pic">香瓶立在白床单的褶皱里，瓶身透光；一只手入画握住瓶身</td><td>拇指在标签上停一下</td><td>（梨的清甜先到，像刚咬开的那一口）</td><td>玻璃与布料轻碰</td></tr>
+      <tr><td class="n">12</td><td class="t">00:32.5–00:35</td><td class="t">2.5</td><td>特写 · 固定，120fps</td><td class="pic">喷头按下，雾在逆光里散成一片细白，慢慢飘</td><td>按下去要果断</td><td>（然后是铃兰，和玫瑰）</td><td>喷雾"嘶"——全片第一个硬声音</td></tr>
+      <tr><td class="n">13</td><td class="t">00:35–00:37.5</td><td class="t">2.5</td><td>特写 · 固定</td><td class="pic">手腕内侧，雾落在皮肤上，皮肤起一点细光</td><td>手背转一下，看它</td><td>（喷在耳后）</td><td>静，只剩呼吸</td></tr>
+      <tr><td class="n">14</td><td class="t">00:37.5–00:40</td><td class="t">2.5</td><td>近景 · 手持</td><td class="pic">她把头发拨到一边，喷向耳后与颈侧；碎发被气流吹动</td><td>眼睛闭一下</td><td>（也喷在枕头上）</td><td>喷雾第二下，很短</td></tr>
+      <tr><td class="n">15</td><td class="t">00:40–00:42.5</td><td class="t">2.5</td><td>微距 · 俯拍</td><td class="pic">切开的白梨、铃兰与白玫瑰花瓣散在白布上，其中一片挂着水珠</td><td>—</td><td>（白麝香留在布上，很久）</td><td>极轻的室内底噪</td></tr>
+      <tr><td class="n">16</td><td class="t">00:42.5–00:45</td><td class="t">2.5</td><td>俯拍中景 · 固定</td><td class="pic">她整个人倒回床上，白床单扬起又落下，盖住一半画面；手写卡随床单落定浮现</td><td>倒下去要松，不要摆</td><td><span class="cardline">SOFT ISN'T WEAK「柔软不是软弱」</span></td><td>床单扬起的气流声</td></tr>
+    </table>
+  </div>
+
+  <div class="segbox">
+    <div class="seghead"><span class="s">S4</span><h3>留</h3><span class="tc">00:45 — 01:00｜15.0 s｜6 镜</span></div>
+    <p class="segfn"><em>功能：</em>偿付"什么都没做"，并把产品放回生活的位置（窗台、枕头、床单）；落款不做 logo 大板。</p>
+    <table class="shots">
+      <tr><th>镜</th><th>时间码</th><th>时长</th><th>景别 · 运动</th><th>画面</th><th>表演</th><th>字幕 / 卡</th><th>声音</th></tr>
+      <tr><td class="n">17</td><td class="t">00:45–00:47.5</td><td class="t">2.5</td><td>中景 · 固定</td><td class="pic">阳台，赤脚站在木地板上，双手捧白瓷杯，晨光穿过栏杆落在手臂上</td><td>捧着，不喝</td><td>（咖啡凉了一点，没关系）</td><td>城市低频、鸟</td></tr>
+      <tr><td class="n">18</td><td class="t">00:47.5–00:50</td><td class="t">2.5</td><td>特写 · 固定</td><td class="pic">杯沿水痕、手腕、袖口被风吹动</td><td>手指在杯壁上敲一下</td><td>（书翻到第三页，也没关系）</td><td>纸页翻动的轻响</td></tr>
+      <tr><td class="n">19</td><td class="t">00:50–00:52.5</td><td class="t">2.5</td><td>全景 · 慢推</td><td class="pic">屋顶与城市虚焦成一片灰蓝，她坐在前景，白衬衫被风鼓起</td><td>靠着椅背不动</td><td>（一整个上午）</td><td>风</td></tr>
+      <tr><td class="n">20</td><td class="t">00:52.5–00:55</td><td class="t">2.5</td><td>特写 · 固定（微延时）</td><td class="pic">香瓶放在窗台上，影子随光慢慢移动；瓶身反出一条细高光</td><td>—</td><td>（只做了一件事）</td><td>静，秒针一下</td></tr>
+      <tr><td class="n">21</td><td class="t">00:55–00:57.5</td><td class="t">2.5</td><td>中景 · 手持</td><td class="pic">她仰头闭眼，风把头发吹到脸上，嘴角松了一下（不必笑开）</td><td>松弛，不是甜美</td><td>（什么也没做）</td><td>风变大一点</td></tr>
+      <tr><td class="n">22</td><td class="t">00:57.5–01:00</td><td class="t">2.5</td><td>特写 · 固定（落款）</td><td class="pic">白床单褶皱充满画面，手写字压上去：LAZY SUNDAY MORNING／慵懒周末，下方一行小字 MAISON MARGIELA · REPLICA</td><td>—</td><td><span class="cardline">STAY A LITTLE LONGER「再赖一会儿」→ 落款</span></td><td>音乐收在一个单音上，留残响</td></tr>
+    </table>
+  </div>
+
+  <h2><span class="num">03 / COPY</span>文案卡：四段各五句</h2>
+  <p class="sub">中文每句 ≤10 字、2–2.5 秒一换。不出现"香调""前中后调"这类成分词，只出现能被看见的物理细节：白、轻、凉、雾、光。</p>
+  <div class="cop">
+    <div><h5>S1 · 醒</h5>
+      <p>（一周里，你当过很多个角色）</p><p>（员工、女儿、谁的朋友）</p><p>（闹钟响过一次，你没有理它）</p><p><b>卡：NOTHING TO RUSH FOR「今天不赶时间」</b></p><p>（今天没有人叫你）</p></div>
+    <div><h5>S2 · 洗</h5>
+      <p>（热水冲下来的时候，那些名字才被冲掉）</p><p>（泡沫是白的，很轻）</p><p>（镜子上有雾，你没有擦）</p><p><b>卡：CLEAN IS A FEELING「干净是洗给自己看的」</b></p><p>（干净不是给别人看的）</p></div>
+    <div><h5>S3 · 香</h5>
+      <p>（梨的清甜先到，像刚咬开的那一口）</p><p>（然后是铃兰，和玫瑰）</p><p>（喷在耳后）</p><p>（也喷在枕头上）</p><p><b>卡：SOFT ISN'T WEAK「柔软不是软弱」</b></p></div>
+    <div><h5>S4 · 留</h5>
+      <p>（咖啡凉了一点，没关系）</p><p>（书翻到第三页，也没关系）</p><p>（一整个上午）（只做了一件事）</p><p>（什么也没做）</p><p><b>卡：STAY A LITTLE LONGER「再赖一会儿」</b></p></div>
+  </div>
+
+  <h2><span class="num">04 / SCENT</span>香调可视化：每个香材都要有画面出口</h2>
+  <table>
+    <tr><th>香材</th><th>出现在</th><th>画面怎么给</th></tr>
+    <tr><td>梨（前）</td><td>镜 11、15</td><td>切开的白梨、挂着水珠的果肉——清甜必须先"看见"</td></tr>
+    <tr><td>铃兰（前）</td><td>镜 15、21</td><td>白色小花落在白布上；风里的一下轻晃</td></tr>
+    <tr><td>醛（前）</td><td>镜 7、12</td><td>皂感＝白浴巾吸水后干爽的表面；喷雾破空的锐利一瞬</td></tr>
+    <tr><td>鸢尾花 / 玫瑰花瓣（中）</td><td>镜 15、22</td><td>花瓣散在床单褶皱里，不摆盘、不居中</td></tr>
+    <tr><td>橙花（中）</td><td>镜 8、19</td><td>高光与过曝——橙花的"明亮"用曝光给，不用颜色给</td></tr>
+    <tr><td>印尼广藿香（后）</td><td>镜 17、20</td><td>木地板、窗台的木纹与微土色，后调的"底"落在木头上</td></tr>
+    <tr><td>黄葵子 / 白麝香（后）</td><td>镜 16、22</td><td>贴肤感＝白床单与皮肤细光；最后一帧的落款就压在布上</td></tr>
+  </table>
+
+  <h2><span class="num">05 / SPEC</span>制作规格</h2>
+  <div class="grid2">
+    <div class="item"><h4>画幅与帧率</h4><p>9:16 竖拍，1080×1920 起（建议 4K 竖拍再裁）；主体 25/30p；镜 6、12 用 60/120fps 拍摄，剪时放慢 2×–4×。</p></div>
+    <div class="item"><h4>镜头</h4><p>35mm 环境／50–85mm 人物（T1.8–T2.8 浅景深）／100mm 微距（镜 11、15、18、20）。</p></div>
+    <div class="item"><h4>光</h4><p>全部自然光。清晨 7:00–9:00 侧逆光为唯一主光；浴室一扇窗＋白布反光，不补硬光；<span class="k">镜 12 的喷雾必须打逆光</span>，否则雾看不见。</p></div>
+    <div class="item"><h4>色彩</h4><p>S1 暖白（5200K 略偏暖）→ S2 青白（压 −0.3EV、阴影加青）→ S3 回到中性白 → S4 回暖，是全片唯一的暖调段落。</p></div>
+    <div class="item"><h4>服化</h4><p>白棉睡裙 / oversize 白衬衫；裸妆、湿发自然干；<span class="k">不戴手表、不戴戒指</span>——"被时间绑住"的符号一律去掉。</p></div>
+    <div class="item"><h4>道具</h4><p>白棉床单（提前揉出层次感褶皱）、旧闹钟（指针 9:41）、白瓷杯、切开的梨、铃兰与白玫瑰真花、白浴巾、翻开的书、香瓶 ×2（一瓶拍液面、一瓶拍喷雾）。</p></div>
+    <div class="item"><h4>字幕与安全区</h4><p>独白在 y≈66%（中下 1/3），字号约占画面宽 4.2%，细描边 1px；手写卡居中偏上；底部 12% 留空避开平台 UI。全片不出现竖排。</p></div>
+    <div class="item"><h4>声音</h4><p>无旁白、无对白，字幕承担全部叙事（静音也能看懂）。环境声铺底＋极简钢琴单音；只允许 3 个硬声音（喷雾 ×2、泡泡破 ×1）。四张卡落点（11.0／24.5／42.5／57.5）各配一次气口或留白。</p></div>
+  </div>
+
+  <h2><span class="num">06 / KEYFRAMES</span>关键帧生图提示词（前期提案用）</h2>
+  <p class="sub">四段各一条，可直接投喂生图模型做提案板；成片阶段按实际场景改写。</p>
+  <div class="prompt"><span class="h">S1 · 醒</span>竖构图 9:16，清晨卧室，薄纱窗帘后有逆光，白色棉质床单揉出深浅褶皱，一道光柱斜切床面、光里浮着细微尘埃，一只赤脚从被沿探出踩在浅色木地板上，脚背落一粒高光；高调低饱和，青灰与暖白，35mm 浅景深，轻微胶片颗粒，画面无文字。</div>
+  <div class="prompt"><span class="h">S2 · 洗</span>竖构图 9:16，浴室，花洒水柱打在后颈与肩胛，逆光下水珠炸开成细碎的亮点，皮肤湿润有细光，画面左下白色浴巾一角；冷青白调，湿玻璃质感，高速快门凝固水花，写实商业摄影，柔和对比。</div>
+  <div class="prompt"><span class="h">S3 · 香</span>竖构图 9:16 微距静物，透明方形香水瓶（白色标签、银色喷头）立在白色床单的褶皱上，侧逆光穿过瓶身，玻璃边缘一条细高光；旁边一颗水珠、一片白玫瑰花瓣、半个切开的白梨；极简高调，景深极浅，干净通透。</div>
+  <div class="prompt"><span class="h">S4 · 留</span>竖构图 9:16，清晨阳台，白色 oversize 衬衫，赤脚，双手捧着白瓷杯，晨光穿过铁艺栏杆在手臂上投下条状阴影，背景城市虚化成灰蓝；暖白高光，柔和对比，写实时尚短片质感，安静。</div>
+
+  <h2><span class="num">07 / DIFF</span>与参考片的异同</h2>
+  <table>
+    <tr><th>维度</th><th>Armani 玉龙茶香（参考）</th><th>本片（慵懒周末）</th></tr>
+    <tr><td>时长 / 卡数</td><td>89.8s / 3 张卡</td><td>60s / 4 张卡（每段一张，天然适配四段式投放）</td></tr>
+    <tr><td>场景</td><td>城市 → 阿尔卑斯雪山（"逃出去"）</td><td>卧室 → 浴室 → 床 → 阳台（"不出去"）</td></tr>
+    <tr><td>平均镜长</td><td>≤2.4s</td><td>2.7s，且越往后越静</td></tr>
+    <tr><td>主张</td><td>你可以不合群</td><td>休息不需要理由</td></tr>
+    <tr><td>产品露出</td><td>5 次，每次 ≤2s</td><td>3 次核心露出（11／16／20）＋落款，全部与"布"或"木"同框</td></tr>
+    <tr><td>留白设计</td><td>48s 处 1.5 秒静音做"呼吸口"</td><td>42.5s 床单落定 + 57.5s 落款两处留白</td></tr>
+  </table>
+  <p>一句话：<b>同一套语法，换一个更小的战场</b>——从"跟世界保持距离"换成"跟自己待一会儿"。</p>
+
+  <footer>
+    配套文件：<code>分镜-REPLICA慵懒周末-60s.md</code>（同内容纯文本版，便于复制到拍摄群里）。<br>
+    时长已按月/段校算：S1 15.0 + S2 15.0 + S3 15.0 + S4 15.0 = 60.0 秒；22 镜，平均 2.7 秒。<br>
+    注：片长 60 秒为成片上限，实测时字幕与留白可各让 0.5 秒，不必为了凑整改动镜头长度。
+  </footer>
+</div>
+</body>
+</html>

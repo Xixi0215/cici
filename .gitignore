@@ -1,0 +1,16 @@
+# WorkBuddy 内部数据（记忆、会话等），不上传到公开仓库
+.workbuddy/
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# 本地误建的空仓库（无内容），避免被当作 submodule
+Xixi/
